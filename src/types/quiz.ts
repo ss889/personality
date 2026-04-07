@@ -40,7 +40,7 @@ export interface Trait {
 }
 
 export interface QuizState {
-  currentQuizId: string | null;
+  currentQuiz: Quiz | null;
   currentQuestionIndex: number;
   answers: Answer[];
   result: PersonalityResult | null;

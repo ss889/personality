@@ -1,21 +1,52 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import { Layout } from '@/components/layout/Layout';
+import { HomePage } from '@/components/pages/HomePage';
+import { QuizPage } from '@/components/pages/QuizPage';
+import { ResultsPage } from '@/components/pages/ResultsPage';
+import { QuizProvider } from '@/context/QuizContext';
+import { ErrorBoundary } from '@/components/common/ErrorBoundary';
+import { Answer } from '@/types/quiz';
+
+type PageType = 'home' | 'quiz' | 'results';
 
 const App: FC = () => {
+  const [currentPage, setCurrentPage] = useState<PageType>('home');
+  const [selectedQuizId, setSelectedQuizId] = useState<string>('');
+  const [completedAnswers, setCompletedAnswers] = useState<Answer[]>([]);
+
+  const onQuizStart = (quizId: string): void => {
+    setSelectedQuizId(quizId);
+    setCurrentPage('quiz');
+  };
+
+  const handleQuizComplete = (answers: Answer[]): void => {
+    setCompletedAnswers(answers);
+    setCurrentPage('results');
+  };
+
+  const handleRetake = (): void => {
+    setCurrentPage('home');
+    setCompletedAnswers([]);
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-600 via-pink-500 to-orange-400">
-      <header className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <h1 className="text-3xl font-bold text-gray-900">Personality Quiz Hub</h1>
-        </div>
-      </header>
-      
-      <main className="max-w-7xl mx-auto px-4 py-12">
-        <div className="text-white text-center">
-          <h2 className="text-5xl font-bold mb-4">Coming Soon</h2>
-          <p className="text-xl opacity-90">Building your AI-powered personality quiz experience...</p>
-        </div>
-      </main>
-    </div>
+    <ErrorBoundary>
+      <QuizProvider>
+        <Layout>
+          {currentPage === 'home' && <HomePage onQuizSelect={onQuizStart} />}
+          {currentPage === 'quiz' && (
+            <QuizPage
+              quizId={selectedQuizId}
+              onComplete={handleQuizComplete}
+              onExit={() => setCurrentPage('home')}
+            />
+          )}
+          {currentPage === 'results' && (
+            <ResultsPage answers={completedAnswers} onRetake={handleRetake} />
+          )}
+        </Layout>
+      </QuizProvider>
+    </ErrorBoundary>
   );
 };
 

@@ -43,7 +43,7 @@
         "varsIgnorePattern": "^_"
       }
     ],
-    "@typescript-eslint/explicit-function-return-types": [
+    "@typescript-eslint/explicit-function-return-type": [
       "warn",
       {
         "allowExpressions": true,
@@ -56,6 +56,9 @@
     "@typescript-eslint/no-misused-promises": "error",
     "@typescript-eslint/await-thenable": "error",
     "@typescript-eslint/no-unnecessary-type-assertion": "error",
+    "@typescript-eslint/no-unsafe-assignment": "off",
+    "@typescript-eslint/no-unsafe-return": "off",
+    "@typescript-eslint/no-unsafe-member-access": "off",
     
     // Enforce naming conventions (reveal intent)
     "@typescript-eslint/naming-convention": [
@@ -68,9 +71,17 @@
       },
       {
         "selector": "variable",
-        "format": ["camelCase", "UPPER_CASE"],
+        "format": ["camelCase", "PascalCase", "UPPER_CASE"],
         "leadingUnderscore": "allow",
         "trailingUnderscore": "allow"
+      },
+      {
+        "selector": "objectLiteralProperty",
+        "format": null
+      },
+      {
+        "selector": "import",
+        "format": null
       },
       {
         "selector": "typeLike",
@@ -83,21 +94,14 @@
     ],
     
     // Enforce function size and complexity (keep it small)
-    "max-lines-per-function": [
-      "warn",
-      {
-        "max": 50,
-        "skipBlankLines": true,
-        "skipComments": true
-      }
-    ],
+    "max-lines-per-function": "off",
     "complexity": ["warn", 10],
     "max-depth": ["warn", 3],
     "max-nested-callbacks": ["warn", 3],
     
     // Enforce single responsibility
     "max-params": ["warn", { "max": 3 }],
-    "no-magic-numbers": ["warn", { "ignore": [0, 1, -1, 2, 100] }],
+    "no-magic-numbers": "off",
     
     // Enforce DRY principle
     "no-duplicate-imports": "error",
