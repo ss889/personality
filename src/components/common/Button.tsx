@@ -17,12 +17,12 @@ export const Button: FC<ButtonProps> = ({
   className = '',
 }) => {
   const baseClasses =
-    'px-6 py-3 rounded-lg font-semibold transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vibrant-purple';
+    'px-6 py-3 rounded-lg font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vibrant-purple';
 
   const variantClasses = {
-    primary: 'bg-gradient-to-r from-vibrant-purple to-vibrant-pink text-white hover:shadow-lg focus-visible:outline-white',
-    secondary: 'bg-gray-200 text-gray-900 hover:bg-gray-300',
-    outline: 'border-2 border-vibrant-purple text-vibrant-purple hover:bg-purple-50',
+    primary: 'bg-gradient-to-r from-vibrant-purple to-vibrant-pink text-white hover:shadow-[0_0_20px_rgba(139,92,246,0.6),0_0_40px_rgba(236,72,153,0.3)] focus-visible:outline-white',
+    secondary: 'bg-gray-200 text-gray-900 hover:bg-gray-300 hover:shadow-[0_0_15px_rgba(0,0,0,0.1)]',
+    outline: 'border-2 border-vibrant-purple text-vibrant-purple hover:bg-purple-50 hover:shadow-[0_0_20px_rgba(139,92,246,0.4)]',
   };
 
   return (
