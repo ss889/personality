@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { motion } from 'framer-motion';
 
 interface HeaderProps {
   onNavigate?: (sectionId: string) => void;
@@ -21,9 +20,9 @@ export const Header: FC<HeaderProps> = ({ onNavigate }) => {
           <button
             type="button"
             onClick={() => onNavigate?.('home-hero')}
-            className="text-2xl font-bold bg-gradient-to-r from-vibrant-purple to-vibrant-pink bg-clip-text text-transparent"
+            className="text-2xl font-bold text-slate-900"
           >
-            ∞ Spark
+            Spark
           </button>
         </div>
 
@@ -41,16 +40,6 @@ export const Header: FC<HeaderProps> = ({ onNavigate }) => {
           ))}
         </nav>
 
-        {/* Login Button */}
-        <motion.button
-          type="button"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          onClick={() => onNavigate?.('personality-types')}
-          className="px-6 py-2 bg-gradient-to-r from-vibrant-purple to-vibrant-pink text-white rounded-lg font-semibold text-sm transition-all duration-300 hover:shadow-[0_0_20px_rgba(139,92,246,0.6),0_0_40px_rgba(236,72,153,0.3)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-vibrant-purple"
-        >
-          Start
-        </motion.button>
       </div>
     </header>
   );
