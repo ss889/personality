@@ -7,9 +7,15 @@ import { fetchQuizzes } from '@/utils/api';
 
 interface HomePageProps {
   onQuizSelect?: (quizId: string) => void;
+  scrollToSectionId?: string | null;
+  onScrollComplete?: () => void;
 }
 
-export const HomePage: FC<HomePageProps> = ({ onQuizSelect }) => {
+export const HomePage: FC<HomePageProps> = ({
+  onQuizSelect,
+  scrollToSectionId,
+  onScrollComplete,
+}) => {
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -32,6 +38,22 @@ export const HomePage: FC<HomePageProps> = ({ onQuizSelect }) => {
 
     void loadQuizzes();
   }, []);
+
+  useEffect(() => {
+    if (!scrollToSectionId) {
+      return;
+    }
+
+    requestAnimationFrame(() => {
+      const target = document.getElementById(scrollToSectionId);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      onScrollComplete?.();
+    });
+  }, [scrollToSectionId, onScrollComplete]);
 
   if (error) {
     return (

@@ -14,6 +14,7 @@ const App: FC = () => {
   const [currentPage, setCurrentPage] = useState<PageType>('home');
   const [selectedQuizId, setSelectedQuizId] = useState<string>('');
   const [completedAnswers, setCompletedAnswers] = useState<Answer[]>([]);
+  const [targetSectionId, setTargetSectionId] = useState<string | null>(null);
 
   const onQuizStart = (quizId: string): void => {
     setSelectedQuizId(quizId);
@@ -30,10 +31,21 @@ const App: FC = () => {
     setCompletedAnswers([]);
   };
 
+  const handleHeaderNavigate = (sectionId: string): void => {
+    setTargetSectionId(sectionId);
+    if (currentPage !== 'home') {
+      setCurrentPage('home');
+    }
+  };
+
+  const clearTargetSection = (): void => {
+    setTargetSectionId(null);
+  };
+
   return (
     <ErrorBoundary>
       <QuizProvider>
-        <Layout>
+        <Layout onNavigate={handleHeaderNavigate}>
           <AnimatePresence mode="wait">
             {currentPage === 'home' && (
               <motion.div
@@ -43,7 +55,11 @@ const App: FC = () => {
                 exit={{ opacity: 0, y: -16 }}
                 transition={{ duration: 0.28, ease: 'easeOut' }}
               >
-                <HomePage onQuizSelect={onQuizStart} />
+                <HomePage
+                  onQuizSelect={onQuizStart}
+                  scrollToSectionId={targetSectionId}
+                  onScrollComplete={clearTargetSection}
+                />
               </motion.div>
             )}
             {currentPage === 'quiz' && (
