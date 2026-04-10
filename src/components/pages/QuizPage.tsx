@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useQuiz } from '@/hooks/useQuiz';
 import { QuestionCard } from '@/components/quiz/QuestionCard';
@@ -16,10 +16,19 @@ export const QuizPage: FC<QuizPageProps> = ({ quizId, onComplete, onExit }) => {
   const { currentQuiz, currentQuestionIndex, answers, loading, loadQuiz, moveToQuestion, answerQuestion } = useQuiz();
   const [showExitConfirm, setShowExitConfirm] = useState(false);
   const [answered, setAnswered] = useState(false);
+  const advanceTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     void loadQuiz(quizId);
   }, [quizId, loadQuiz]);
+
+  useEffect(() => {
+    return () => {
+      if (advanceTimerRef.current !== null) {
+        window.clearTimeout(advanceTimerRef.current);
+      }
+    };
+  }, []);
 
   if (loading || !currentQuiz) {
     return <Loading message="Loading quiz..." />;
@@ -34,13 +43,46 @@ export const QuizPage: FC<QuizPageProps> = ({ quizId, onComplete, onExit }) => {
       questionId: currentQuestion.id,
       selectedOptionIds: [optionId],
     };
+
+    const nextAnswers = [
+      ...answers.filter((existingAnswer) => existingAnswer.questionId !== currentQuestion.id),
+      answer,
+    ];
+
     answerQuestion(answer);
     setAnswered(true);
+
+    if (advanceTimerRef.current !== null) {
+      window.clearTimeout(advanceTimerRef.current);
+    }
+
+    advanceTimerRef.current = window.setTimeout(() => {
+      if (isLastQuestion) {
+        onComplete(nextAnswers);
+        return;
+      }
+
+      moveToQuestion(currentQuestionIndex + 1);
+      setAnswered(false);
+    }, 220);
   };
 
   const handleNext = (): void => {
+    if (advanceTimerRef.current !== null) {
+      window.clearTimeout(advanceTimerRef.current);
+      advanceTimerRef.current = null;
+    }
+
     if (isLastQuestion) {
-      onComplete(answers);
+      const latestAnswer = answers.find((answer) => answer.questionId === currentQuestion.id);
+      const nextAnswers = latestAnswer
+        ? [
+            ...answers.filter((answer) => answer.questionId !== currentQuestion.id),
+            latestAnswer,
+          ]
+        : answers;
+
+      onComplete(nextAnswers);
     } else {
       moveToQuestion(currentQuestionIndex + 1);
       setAnswered(false);
@@ -48,6 +90,11 @@ export const QuizPage: FC<QuizPageProps> = ({ quizId, onComplete, onExit }) => {
   };
 
   const handlePrevious = (): void => {
+    if (advanceTimerRef.current !== null) {
+      window.clearTimeout(advanceTimerRef.current);
+      advanceTimerRef.current = null;
+    }
+
     moveToQuestion(currentQuestionIndex - 1);
     setAnswered(false);
   };
@@ -116,10 +163,14 @@ export const QuizPage: FC<QuizPageProps> = ({ quizId, onComplete, onExit }) => {
             variant="primary"
             onClick={handleNext}
             disabled={!answered}
+            className="hidden"
           >
             {isLastQuestion ? 'See Results' : 'Next →'}
           </Button>
         </div>
+        <p className="text-center text-sm text-gray-500">
+          Answers move forward automatically. You can still go back if you want to change one.
+        </p>
       </div>
     </motion.div>
   );
