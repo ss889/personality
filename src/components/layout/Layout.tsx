@@ -9,9 +9,9 @@ interface LayoutProps {
 
 export const Layout: FC<LayoutProps> = ({ children, onNavigate }) => {
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-purple-50 to-pink-50">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-[#fff8f0] via-[#f7fbff] to-[#fff6f8]">
       <Header onNavigate={onNavigate} />
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      <main className="flex-1 w-full px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
         {children}
       </main>
       <Footer />
