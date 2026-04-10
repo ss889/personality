@@ -14,35 +14,35 @@ interface HomePageProps {
 
 const highlightCards = [
   {
-    title: 'Clarity that sticks',
-    description: 'Short, useful insights you can feel immediately and revisit later.',
+    title: 'Clear strengths profile',
+    description: 'See your strongest traits quickly and understand what they mean in practice.',
     tone: 'from-vibrant-orange/15 to-vibrant-orange/5',
-    badge: 'Fast read',
+    badge: 'Immediate value',
   },
   {
-    title: 'Built for sharing',
-    description: 'Results are easy to share, compare, and talk through with friends or teams.',
+    title: 'Easy to compare results',
+    description: 'Share outcomes with friends or teams and use them to start better conversations.',
     tone: 'from-vibrant-pink/15 to-vibrant-pink/5',
-    badge: 'Social friendly',
+    badge: 'Collaboration ready',
   },
   {
-    title: 'Designed to flow',
-    description: 'Every tap, scroll, and transition is tuned to feel smooth and intentional.',
+    title: 'Fast decision support',
+    description: 'Turn quiz insights into practical next steps you can act on right away.',
     tone: 'from-vibrant-cyan/15 to-vibrant-cyan/5',
-    badge: 'Seamless UX',
+    badge: 'Action focused',
   },
 ];
 
 const spotlightMetrics = [
-  { value: '12', label: 'quiz styles', accent: 'text-vibrant-orange' },
-  { value: '100%', label: 'mobile ready', accent: 'text-vibrant-cyan' },
-  { value: '3 taps', label: 'to start', accent: 'text-vibrant-pink' },
+  { value: '12', label: 'assessment paths', accent: 'text-vibrant-orange' },
+  { value: '100%', label: 'cross-device access', accent: 'text-vibrant-cyan' },
+  { value: '3 min', label: 'average completion', accent: 'text-vibrant-pink' },
 ];
 
 const journeyPoints = [
-  'Start with a quick quiz that feels playful, not clinical.',
-  'Move through each question with clear progress and simple actions.',
-  'Land on a result page that is easy to read and easy to share.',
+  'Pick a quiz based on your goal: self-awareness, communication, or team growth.',
+  'Answer focused questions and track progress in real time.',
+  'Get a concise profile you can apply immediately and share when useful.',
 ];
 
 export const HomePage: FC<HomePageProps> = ({
@@ -128,13 +128,13 @@ export const HomePage: FC<HomePageProps> = ({
             className="max-w-2xl"
           >
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.24em] text-white/60">
-              Personality, made playful
+              Personality insights hub
             </p>
             <h1 className="text-4xl leading-[1.06] font-extrabold tracking-tight text-white md:text-5xl lg:text-6xl">
-              Discover what makes you click, connect, and grow.
+              Get actionable personality insights in minutes.
             </h1>
             <p className="mt-6 max-w-xl text-base leading-7 text-white/74 md:text-lg">
-              A warm, visual quiz experience that feels energetic up front and stays clear all the way through the results.
+              Understand your behavior patterns, communication style, and growth opportunities with clear, shareable results.
             </p>
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
@@ -156,7 +156,7 @@ export const HomePage: FC<HomePageProps> = ({
                 onClick={() => document.getElementById('journey')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
                 className="border-white/35 bg-white/5 text-white hover:bg-white/10"
               >
-                See how it works
+                How it works
               </Button>
             </div>
 
@@ -192,7 +192,7 @@ export const HomePage: FC<HomePageProps> = ({
                 <div className="h-12 w-12 rounded-full bg-[#f4f1ea]" />
                 <div className="flex-1">
                   <div className="text-sm font-semibold text-[#14343a]">Quick insight</div>
-                  <div className="mt-1 text-xs leading-5 text-[#14343a]/75">A compact result card that feels friendly and immediate.</div>
+                  <div className="mt-1 text-xs leading-5 text-[#14343a]/75">A compact summary of your top traits and strongest signals.</div>
                 </div>
               </div>
             </motion.div>
@@ -206,7 +206,7 @@ export const HomePage: FC<HomePageProps> = ({
                 <div className="h-12 w-12 rounded-full bg-white/85" />
                 <div className="flex-1">
                   <div className="text-sm font-semibold text-white">Shared experience</div>
-                  <div className="mt-1 text-xs leading-5 text-white/80">Cards that feel layered, animated, and easy to click.</div>
+                  <div className="mt-1 text-xs leading-5 text-white/80">Results your team can discuss to improve collaboration.</div>
                 </div>
               </div>
             </motion.div>
@@ -219,7 +219,7 @@ export const HomePage: FC<HomePageProps> = ({
               <div className="flex items-center justify-between">
                 <div>
                   <div className="text-sm font-semibold text-[#14343a]">Progress story</div>
-                  <div className="text-xs text-[#14343a]/70">Clear motion and a calm finish at the end.</div>
+                  <div className="text-xs text-[#14343a]/70">Step-by-step flow from first question to final recommendations.</div>
                 </div>
                 <div className="flex gap-2">
                   <span className="h-3 w-3 rounded-full bg-vibrant-orange" />
@@ -240,7 +240,7 @@ export const HomePage: FC<HomePageProps> = ({
         className="rounded-[1.75rem] bg-[#5f7a57] px-5 py-5 shadow-[0_18px_50px_rgba(0,0,0,0.1)] md:px-7 md:py-6"
       >
         <div className="flex flex-wrap gap-3">
-          {['Warm design system', 'Smooth interactions', 'Results that feel personal'].map((tag) => (
+          {['Practical insights', 'Fast completion', 'Shareable outcomes'].map((tag) => (
             <span
               key={tag}
               className="rounded-full border border-white/25 bg-white/8 px-4 py-2 text-sm font-medium text-white/90"
@@ -261,10 +261,10 @@ export const HomePage: FC<HomePageProps> = ({
         >
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">Why it works</p>
           <h2 className="mt-4 max-w-3xl text-3xl font-extrabold leading-tight text-gray-900 md:text-4xl">
-            We keep the experience calm up front and rich where it matters.
+            You get useful answers without wasting time.
           </h2>
           <p className="mt-4 max-w-3xl text-base leading-7 text-gray-600 md:text-lg">
-            The home page is built like a guided story: one strong entry point, a clear path into the quizzes, and a few supporting sections that help the page feel alive without getting noisy.
+            The flow is simple: choose a goal, answer focused questions, and receive an outcome you can use for decisions, communication, and growth.
           </p>
 
           <div className="mt-8 grid gap-4 md:grid-cols-3">
@@ -294,7 +294,7 @@ export const HomePage: FC<HomePageProps> = ({
           className="rounded-[2rem] bg-[#fff6ea] p-6 shadow-[0_18px_50px_rgba(16,53,61,0.08)] md:p-8"
         >
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">Preview</p>
-          <h3 className="mt-4 text-2xl font-extrabold text-gray-900">A structured layout with a playful finish</h3>
+          <h3 className="mt-4 text-2xl font-extrabold text-gray-900">What users get from each quiz</h3>
           <div className="mt-6 grid gap-4">
             {highlightCards.map((card) => (
               <div
@@ -319,7 +319,7 @@ export const HomePage: FC<HomePageProps> = ({
             <h2 className="mt-2 text-3xl font-extrabold text-gray-900 md:text-4xl">Choose a path that feels right</h2>
           </div>
           <p className="max-w-xl text-gray-600">
-            Each quiz has its own pace, visual tone, and emotional angle so the experience feels distinct and intentional.
+            Every quiz is built around a specific outcome so users leave with insights they can apply right away.
           </p>
         </div>
 
@@ -356,7 +356,7 @@ export const HomePage: FC<HomePageProps> = ({
               Useful for conversations, coaching, and collaboration.
             </h2>
             <p className="mt-4 max-w-xl text-base leading-7 text-gray-600">
-              The same design language can work for team workshops, onboarding, and shared personality reviews without losing clarity or warmth.
+              Use quiz results in team workshops, onboarding, and coaching sessions to improve alignment and reduce communication friction.
             </p>
           </div>
 
@@ -398,7 +398,7 @@ export const HomePage: FC<HomePageProps> = ({
               Keep the momentum going after the result.
             </h2>
             <p className="mt-4 max-w-2xl text-base leading-7 text-gray-600">
-              Add follow-up sections, deeper explanations, or shareable references so the page feels like a complete experience instead of a dead end.
+              Give users next steps, implementation tips, and references so each result turns into an action plan, not just a label.
             </p>
           </div>
 
