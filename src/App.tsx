@@ -1,4 +1,5 @@
 import { FC, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Layout } from '@/components/layout/Layout';
 import { HomePage } from '@/components/pages/HomePage';
 import { QuizPage } from '@/components/pages/QuizPage';
@@ -33,17 +34,45 @@ const App: FC = () => {
     <ErrorBoundary>
       <QuizProvider>
         <Layout>
-          {currentPage === 'home' && <HomePage onQuizSelect={onQuizStart} />}
-          {currentPage === 'quiz' && (
-            <QuizPage
-              quizId={selectedQuizId}
-              onComplete={handleQuizComplete}
-              onExit={() => setCurrentPage('home')}
-            />
-          )}
-          {currentPage === 'results' && (
-            <ResultsPage answers={completedAnswers} onRetake={handleRetake} />
-          )}
+          <AnimatePresence mode="wait">
+            {currentPage === 'home' && (
+              <motion.div
+                key="home"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: 0.28, ease: 'easeOut' }}
+              >
+                <HomePage onQuizSelect={onQuizStart} />
+              </motion.div>
+            )}
+            {currentPage === 'quiz' && (
+              <motion.div
+                key="quiz"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: 0.28, ease: 'easeOut' }}
+              >
+                <QuizPage
+                  quizId={selectedQuizId}
+                  onComplete={handleQuizComplete}
+                  onExit={() => setCurrentPage('home')}
+                />
+              </motion.div>
+            )}
+            {currentPage === 'results' && (
+              <motion.div
+                key="results"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: 0.28, ease: 'easeOut' }}
+              >
+                <ResultsPage answers={completedAnswers} onRetake={handleRetake} />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </Layout>
       </QuizProvider>
     </ErrorBoundary>

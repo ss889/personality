@@ -52,9 +52,10 @@ export const HomePage: FC<HomePageProps> = ({ onQuizSelect }) => {
   }
 
   return (
-    <div className="space-y-16">
+    <div className="space-y-16 scroll-mt-24">
       {/* Hero Section */}
       <motion.div
+        id="home-hero"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -162,7 +163,7 @@ export const HomePage: FC<HomePageProps> = ({ onQuizSelect }) => {
       </motion.div>
 
       {/* Quiz Grid */}
-      <div>
+      <div id="personality-types" className="scroll-mt-28">
         <h3 className="text-3xl font-bold text-gray-900 mb-8">Choose Your Quiz</h3>
         {loading ? (
           <SkeletonLoader count={3} />
@@ -185,6 +186,53 @@ export const HomePage: FC<HomePageProps> = ({ onQuizSelect }) => {
           </motion.div>
         )}
       </div>
+
+      <motion.section
+        id="teams"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.5 }}
+        className="scroll-mt-28 rounded-3xl bg-white border border-gray-100 p-8 md:p-10 shadow-sm"
+      >
+        <h3 className="text-3xl font-bold text-gray-900 mb-4">For teams that care about people</h3>
+        <p className="text-gray-600 mb-8 max-w-3xl">
+          Use personality insights for better communication, stronger collaboration, and healthier team dynamics.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {['Hiring fit', 'Team chemistry', 'Leadership growth'].map((item) => (
+            <div key={item} className="rounded-2xl bg-gradient-to-br from-vibrant-cyan/15 to-vibrant-purple/10 p-5 border border-vibrant-cyan/20">
+              <p className="text-gray-900 font-semibold">{item}</p>
+            </div>
+          ))}
+        </div>
+      </motion.section>
+
+      <motion.section
+        id="resources"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.5 }}
+        className="scroll-mt-28 rounded-3xl bg-gradient-to-r from-vibrant-orange/15 via-vibrant-pink/10 to-vibrant-cyan/15 border border-gray-100 p-8 md:p-10"
+      >
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <div>
+            <h3 className="text-3xl font-bold text-gray-900 mb-3">Resources to go deeper</h3>
+            <p className="text-gray-700 max-w-2xl">
+              Explore guides and frameworks to turn quiz outcomes into actionable growth plans.
+            </p>
+          </div>
+          <motion.a
+            href="#personality-types"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            className="inline-flex items-center justify-center px-6 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-vibrant-purple to-vibrant-pink transition-all duration-300 hover:shadow-[0_0_20px_rgba(139,92,246,0.45)]"
+          >
+            Explore Quizzes
+          </motion.a>
+        </div>
+      </motion.section>
     </div>
   );
 };
