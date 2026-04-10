@@ -56,19 +56,19 @@ export const QuizPage: FC<QuizPageProps> = ({ quizId, onComplete, onExit }) => {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="min-h-screen py-8"
+      className="min-h-screen py-6 md:py-8"
     >
-      <div className="max-w-4xl mx-auto px-4 space-y-8">
+      <div className="mx-auto max-w-5xl space-y-8 px-0 md:px-4">
         {/* Exit Confirmation Dialog */}
         {showExitConfirm && (
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4 backdrop-blur-sm"
           >
-            <div className="bg-white rounded-lg p-8 max-w-sm mx-auto">
-              <h3 className="text-xl font-bold mb-4">Exit Quiz?</h3>
-              <p className="text-gray-600 mb-6">Your progress will be lost. Are you sure?</p>
+            <div className="mx-auto max-w-sm rounded-[1.75rem] bg-white p-8 shadow-[0_20px_60px_rgba(16,53,61,0.2)]">
+              <h3 className="mb-4 text-xl font-bold text-gray-900">Exit quiz?</h3>
+              <p className="mb-6 text-gray-600">Your progress will be lost. Are you sure?</p>
               <div className="flex gap-4">
                 <Button variant="secondary" onClick={() => setShowExitConfirm(false)}>
                   Continue Quiz
@@ -82,8 +82,11 @@ export const QuizPage: FC<QuizPageProps> = ({ quizId, onComplete, onExit }) => {
         )}
 
         {/* Quiz Header */}
-        <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold">{currentQuiz.title}</h2>
+        <div className="flex flex-col gap-4 rounded-[1.75rem] bg-white/90 px-6 py-5 shadow-[0_14px_40px_rgba(16,53,61,0.06)] md:flex-row md:items-center md:justify-between">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">Quiz mode</p>
+            <h2 className="mt-1 text-2xl font-extrabold text-gray-900 md:text-3xl">{currentQuiz.title}</h2>
+          </div>
           <Button variant="outline" onClick={() => setShowExitConfirm(true)}>
             ✕ Exit
           </Button>
@@ -100,7 +103,7 @@ export const QuizPage: FC<QuizPageProps> = ({ quizId, onComplete, onExit }) => {
         />
 
         {/* Navigation */}
-        <div className="flex items-center justify-between pt-8">
+        <div className="flex items-center justify-between pt-4 md:pt-6">
           <Button
             variant="secondary"
             onClick={handlePrevious}

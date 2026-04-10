@@ -27,17 +27,19 @@ export const QuestionCard: FC<QuestionCardProps> = ({
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
-      className="bg-white rounded-lg shadow-lg p-8 max-w-2xl mx-auto"
+      className="relative max-w-3xl mx-auto overflow-hidden rounded-[2rem] border border-black/5 bg-white/95 p-6 shadow-[0_20px_60px_rgba(16,53,61,0.08)] md:p-8"
     >
+      <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-r from-vibrant-orange via-vibrant-pink to-vibrant-cyan" />
+
       {/* Progress Bar */}
-      <div className="mb-8">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-sm font-semibold text-gray-600">
+      <div className="mb-8 pt-2">
+        <div className="mb-3 flex items-center justify-between text-sm">
+          <span className="font-semibold uppercase tracking-[0.2em] text-gray-500">
             Question {currentIndex + 1} of {totalQuestions}
           </span>
-          <span className="text-sm text-gray-500">{Math.round(progress)}%</span>
+          <span className="font-medium text-gray-500">{Math.round(progress)}%</span>
         </div>
-        <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+        <div className="h-2 w-full overflow-hidden rounded-full bg-[#eef2f6]">
           <motion.div
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.5 }}
@@ -47,7 +49,10 @@ export const QuestionCard: FC<QuestionCardProps> = ({
       </div>
 
       {/* Question */}
-      <h2 className="text-2xl font-bold text-gray-900 mb-8">{question.text}</h2>
+      <div className="mb-6 inline-flex rounded-full bg-[#fff3e6] px-4 py-2 text-sm font-semibold text-[#9b531f]">
+        Choose the answer that feels most like you
+      </div>
+      <h2 className="mb-8 text-2xl font-extrabold leading-tight text-gray-900 md:text-3xl">{question.text}</h2>
 
       {/* Options */}
       <div className="space-y-4">

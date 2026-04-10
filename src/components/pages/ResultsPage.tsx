@@ -72,20 +72,21 @@ export const ResultsPage: FC<ResultsPageProps> = ({ answers, onRetake }) => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
-      className="min-h-screen py-12 px-4"
+      className="min-h-screen py-6 px-0 md:py-8"
     >
       {/* Header Section */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="text-center mb-12"
+        className="mb-10 text-center"
       >
-        <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 bg-clip-text text-transparent mb-4">
+        <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">Results</p>
+        <h1 className="mb-4 text-4xl font-extrabold tracking-tight bg-gradient-to-r from-vibrant-purple via-vibrant-pink to-vibrant-orange bg-clip-text text-transparent md:text-5xl">
           Your Personality Profile
         </h1>
         {currentQuiz && (
-          <p className="text-xl text-gray-600">
+          <p className="text-lg text-gray-600">
             Based on <span className="font-semibold">{currentQuiz.title}</span>
           </p>
         )}
@@ -96,9 +97,9 @@ export const ResultsPage: FC<ResultsPageProps> = ({ answers, onRetake }) => {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.3 }}
-        className="max-w-2xl mx-auto mb-8"
+        className="mx-auto mb-8 max-w-3xl px-0 md:px-0"
       >
-        <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12">
+        <div className="rounded-[2rem] border border-black/5 bg-white p-6 shadow-[0_20px_60px_rgba(16,53,61,0.08)] md:p-8">
           <ResultsDisplay result={selectedResult} />
 
           {/* Share Section */}
@@ -106,9 +107,9 @@ export const ResultsPage: FC<ResultsPageProps> = ({ answers, onRetake }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
-            className="mt-8 pt-8 border-t border-gray-200"
+            className="mt-8 border-t border-gray-200 pt-8"
           >
-            <p className="text-center text-gray-600 font-semibold mb-6">Share your results</p>
+            <p className="mb-6 text-center font-semibold text-gray-600">Share your results</p>
             <ShareButtons result={selectedResult} />
           </motion.div>
         </div>
@@ -119,12 +120,18 @@ export const ResultsPage: FC<ResultsPageProps> = ({ answers, onRetake }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8 }}
-        className="flex justify-center gap-4 mt-12"
+        className="mt-12 flex flex-col justify-center gap-4 sm:flex-row"
       >
         <Button onClick={onRetake} variant="secondary">
           Retake Quiz
         </Button>
-        <Button onClick={() => window.location.href = '/'} variant="outline">
+        <Button
+          onClick={() => {
+            onRetake();
+            document.getElementById('home-hero')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }}
+          variant="outline"
+        >
           Back to Home
         </Button>
       </motion.div>
