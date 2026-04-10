@@ -15,14 +15,36 @@ export const QuizCard: FC<QuizCardProps> = ({ quiz, onClick }) => {
     }
   };
 
+  const getColorIndex = (value: string): number => {
+    const hash = value
+      .split('')
+      .reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    return hash % 3;
+  };
+
   // Color palette rotation for cards
   const colorSchemes = [
-    { bg: 'from-vibrant-orange/20 to-vibrant-orange/10', border: 'border-vibrant-orange/30', accent: 'vibrant-orange' },
-    { bg: 'from-vibrant-pink/20 to-vibrant-pink/10', border: 'border-vibrant-pink/30', accent: 'vibrant-pink' },
-    { bg: 'from-vibrant-cyan/20 to-vibrant-cyan/10', border: 'border-vibrant-cyan/30', accent: 'vibrant-cyan' },
+    {
+      bg: 'from-vibrant-orange/20 to-vibrant-orange/10',
+      border: 'border-vibrant-orange/30',
+      topBar: 'from-vibrant-orange to-vibrant-purple',
+      button: 'from-vibrant-orange to-vibrant-purple',
+    },
+    {
+      bg: 'from-vibrant-pink/20 to-vibrant-pink/10',
+      border: 'border-vibrant-pink/30',
+      topBar: 'from-vibrant-pink to-vibrant-purple',
+      button: 'from-vibrant-pink to-vibrant-purple',
+    },
+    {
+      bg: 'from-vibrant-cyan/20 to-vibrant-cyan/10',
+      border: 'border-vibrant-cyan/30',
+      topBar: 'from-vibrant-cyan to-vibrant-purple',
+      button: 'from-vibrant-cyan to-vibrant-purple',
+    },
   ];
-  
-  const colorScheme = colorSchemes[Math.hash?.(quiz.id) % colorSchemes.length || 0] || colorSchemes[0];
+
+  const colorScheme = colorSchemes[getColorIndex(quiz.id)] || colorSchemes[0];
 
   return (
     <motion.div
@@ -38,7 +60,7 @@ export const QuizCard: FC<QuizCardProps> = ({ quiz, onClick }) => {
       aria-label={`Start quiz: ${quiz.title}`}
     >
       {/* Top gradient bar */}
-      <div className={`h-2 bg-gradient-to-r from-${colorScheme.accent} to-vibrant-purple`} />
+      <div className={`h-2 bg-gradient-to-r ${colorScheme.topBar}`} />
 
       {/* Header with background */}
       <div className={`px-6 pt-8 pb-6 bg-gradient-to-br ${colorScheme.bg}`}>
@@ -67,7 +89,7 @@ export const QuizCard: FC<QuizCardProps> = ({ quiz, onClick }) => {
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className={`w-full px-4 py-3 font-semibold rounded-lg transition-all duration-300 text-white bg-gradient-to-r from-${colorScheme.accent} to-vibrant-purple hover:shadow-[0_0_20px_rgba(139,92,246,0.6)] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-vibrant-purple`}
+          className={`w-full px-4 py-3 font-semibold rounded-lg transition-all duration-300 text-white bg-gradient-to-r ${colorScheme.button} hover:shadow-[0_0_20px_rgba(139,92,246,0.6)] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-vibrant-purple`}
           onClick={(e) => {
             e.stopPropagation();
             onClick?.();
