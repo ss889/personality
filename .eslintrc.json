@@ -109,7 +109,6 @@
     
     // Enforce error handling
     "no-throw-literal": "error",
-    "@typescript-eslint/no-throw-literal": "error",
     "no-implicit-coercion": "error",
     
     // React best practices

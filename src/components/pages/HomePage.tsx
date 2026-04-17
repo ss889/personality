@@ -5,6 +5,7 @@ import { QuizCard } from '@/components/quiz/QuizCard';
 import { SkeletonLoader } from '@/components/common/SkeletonLoader';
 import { Quiz } from '@/types/quiz';
 import { fetchQuizzes } from '@/utils/api';
+import { useContactForm } from '@/hooks/useContactForm';
 
 interface HomePageProps {
   onQuizSelect?: (quizId: string) => void;
@@ -53,6 +54,21 @@ export const HomePage: FC<HomePageProps> = ({
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const {
+    name,
+    email,
+    message,
+    status,
+    setName,
+    setEmail,
+    setMessage,
+    handleSubmit,
+    isValid,
+  } = useContactForm();
+
+  const scrollToSection = (sectionId: string): void => {
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
 
   useEffect(() => {
     const loadQuizzes = async (): Promise<void> => {
@@ -145,7 +161,7 @@ export const HomePage: FC<HomePageProps> = ({
                     return;
                   }
 
-                  document.getElementById('personality-types')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  scrollToSection('personality-types');
                 }}
                 className="px-7 py-3"
               >
@@ -153,7 +169,7 @@ export const HomePage: FC<HomePageProps> = ({
               </Button>
               <Button
                 variant="outline"
-                onClick={() => document.getElementById('journey')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+                onClick={() => scrollToSection('journey')}
                 className="border-white/35 bg-white/5 text-white hover:bg-white/10"
               >
                 How it works
@@ -403,16 +419,87 @@ export const HomePage: FC<HomePageProps> = ({
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row">
-            <Button onClick={() => document.getElementById('personality-types')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}>
+            <Button onClick={() => scrollToSection('personality-types')}>
               Back to quizzes
             </Button>
             <Button
               variant="outline"
-              onClick={() => document.getElementById('home-hero')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+              onClick={() => scrollToSection('home-hero')}
             >
               Return to top
             </Button>
           </div>
+        </div>
+      </motion.section>
+
+      <motion.section
+        id="contact"
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.25 }}
+        transition={{ duration: 0.45 }}
+        className="rounded-[2rem] bg-[#113941] px-6 py-8 text-white shadow-[0_20px_60px_rgba(16,53,61,0.22)] md:px-8 md:py-10"
+      >
+        <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-start">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white/65">Contact</p>
+            <h2 className="mt-3 text-3xl font-extrabold md:text-4xl">Want a custom quiz setup for your use case?</h2>
+            <p className="mt-4 max-w-xl text-base leading-7 text-white/78">
+              Share your goal and audience. We can help you design quizzes that map results to relevant actions, resources, and development pathways.
+            </p>
+            <div className="mt-6 space-y-2 text-sm text-white/80">
+              <p>Email: hello@sparkinsights.app</p>
+              <p>Response time: usually within 1-2 business days</p>
+            </div>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-4 rounded-[1.5rem] bg-white/10 p-5 ring-1 ring-white/20 md:p-6">
+            <div>
+              <label htmlFor="contact-name" className="mb-2 block text-sm font-semibold text-white/85">Name</label>
+              <input
+                id="contact-name"
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+                className="w-full rounded-xl border border-white/25 bg-white/90 px-4 py-3 text-sm text-gray-900 outline-none transition-colors focus:border-[#f4a328]"
+                placeholder="Your name"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="contact-email" className="mb-2 block text-sm font-semibold text-white/85">Email</label>
+              <input
+                id="contact-email"
+                type="email"
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                className="w-full rounded-xl border border-white/25 bg-white/90 px-4 py-3 text-sm text-gray-900 outline-none transition-colors focus:border-[#f4a328]"
+                placeholder="you@company.com"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="contact-message" className="mb-2 block text-sm font-semibold text-white/85">Message</label>
+              <textarea
+                id="contact-message"
+                rows={4}
+                value={message}
+                onChange={(event) => setMessage(event.target.value)}
+                className="w-full resize-y rounded-xl border border-white/25 bg-white/90 px-4 py-3 text-sm text-gray-900 outline-none transition-colors focus:border-[#f4a328]"
+                placeholder="Tell us what you want to build."
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={!isValid}
+              className="w-full rounded-xl bg-gradient-to-r from-[#123e47] to-[#1e5966] px-6 py-3 font-semibold text-white transition-all duration-300 enabled:hover:shadow-[0_14px_30px_rgba(16,53,61,0.2)] disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+            >
+              Send message
+            </button>
+            {status && (
+              <p className="text-sm text-white/85">{status}</p>
+            )}
+          </form>
         </div>
       </motion.section>
     </div>

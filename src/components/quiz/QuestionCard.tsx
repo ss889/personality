@@ -9,7 +9,7 @@ interface QuestionCardProps {
   totalQuestions: number;
   onSelectOption: (optionId: string) => void;
   selectedOptionId?: string;
-  isAnswered?: boolean;
+  lockSelection?: boolean;
 }
 
 export const QuestionCard: FC<QuestionCardProps> = ({
@@ -18,7 +18,7 @@ export const QuestionCard: FC<QuestionCardProps> = ({
   totalQuestions,
   onSelectOption,
   selectedOptionId,
-  isAnswered = false,
+  lockSelection = false,
 }) => {
   const progress = ((currentIndex + 1) / totalQuestions) * 100;
 
@@ -62,11 +62,11 @@ export const QuestionCard: FC<QuestionCardProps> = ({
             option={option}
             isSelected={selectedOptionId === option.id}
             onSelect={() => {
-              if (!isAnswered) {
+              if (!lockSelection) {
                 onSelectOption(option.id);
               }
             }}
-            disabled={isAnswered}
+            disabled={lockSelection}
           />
         ))}
       </div>

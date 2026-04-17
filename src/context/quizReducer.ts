@@ -4,6 +4,10 @@ export type QuizAction =
   | { type: 'LOAD_QUIZ'; payload: Quiz }
   | { type: 'MOVE_TO_QUESTION'; payload: number }
   | { type: 'ANSWER_QUESTION'; payload: Answer }
+  | {
+      type: 'HYDRATE_PROGRESS';
+      payload: { answers: Answer[]; currentQuestionIndex: number };
+    }
   | { type: 'SET_RESULT'; payload: PersonalityResult }
   | { type: 'RESET_QUIZ' }
   | { type: 'SET_LOADING'; payload: boolean }
@@ -27,6 +31,21 @@ export const initialState: QuizState = {
   error: null,
 };
 
+const mergeAnswer = (answers: Answer[], nextAnswer: Answer): Answer[] => {
+  const existingAnswerIndex = answers.findIndex((answer) => answer.questionId === nextAnswer.questionId);
+
+  if (existingAnswerIndex >= 0) {
+    return answers.map((answer, index) => (index === existingAnswerIndex ? nextAnswer : answer));
+  }
+
+  return [...answers, nextAnswer];
+};
+
+const clampQuestionIndex = (quiz: Quiz, questionIndex: number): number => {
+  const maxIndex = quiz.questions.length - 1;
+  return Math.max(0, Math.min(questionIndex, maxIndex));
+};
+
 export const quizReducer = (state: QuizState, action: QuizAction): QuizState => {
   switch (action.type) {
     case 'LOAD_QUIZ':
@@ -45,19 +64,21 @@ export const quizReducer = (state: QuizState, action: QuizAction): QuizState => 
       };
 
     case 'ANSWER_QUESTION': {
-      const existingAnswerIndex = state.answers.findIndex(
-        (a) => a.questionId === action.payload.questionId
-      );
-      const newAnswers =
-        existingAnswerIndex >= 0
-          ? state.answers.map((a, idx) =>
-              idx === existingAnswerIndex ? action.payload : a
-            )
-          : [...state.answers, action.payload];
+      return {
+        ...state,
+        answers: mergeAnswer(state.answers, action.payload),
+      };
+    }
+
+    case 'HYDRATE_PROGRESS': {
+      if (!state.currentQuiz) {
+        return state;
+      }
 
       return {
         ...state,
-        answers: newAnswers,
+        answers: action.payload.answers,
+        currentQuestionIndex: clampQuestionIndex(state.currentQuiz, action.payload.currentQuestionIndex),
       };
     }
 

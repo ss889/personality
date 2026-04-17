@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Answer, PersonalityResult } from '@/types/quiz';
 import { ResultsDisplay } from '@/components/quiz/ResultsDisplay';
+import { ResultPathways } from '@/components/quiz/ResultPathways';
 import { ShareButtons } from '@/components/quiz/ShareButtons';
 import { Button } from '@/components/common/Button';
 import { useQuiz } from '@/hooks/useQuiz';
@@ -15,7 +16,15 @@ interface ResultsPageProps {
 
 export const ResultsPage: FC<ResultsPageProps> = ({ answers, onRetake }) => {
   const { currentQuiz } = useQuiz();
-  const { result, loading, error, generate } = useRecommendations();
+  const {
+    result,
+    loading,
+    error,
+    source,
+    confidence,
+    fromCache,
+    generate,
+  } = useRecommendations();
   const [selectedResult, setSelectedResult] = useState<PersonalityResult | null>(null);
 
   useEffect(() => {
@@ -90,6 +99,13 @@ export const ResultsPage: FC<ResultsPageProps> = ({ answers, onRetake }) => {
             Based on <span className="font-semibold">{currentQuiz.title}</span>
           </p>
         )}
+        {source && confidence !== null && (
+          <p className="mt-3 text-sm text-gray-500">
+            Recommendation source: <span className="font-semibold uppercase">{source}</span>
+            {' '}| confidence: <span className="font-semibold">{Math.round(confidence * 100)}%</span>
+            {fromCache ? ' | served from cache' : ''}
+          </p>
+        )}
       </motion.div>
 
       {/* Main Results Card */}
@@ -101,6 +117,8 @@ export const ResultsPage: FC<ResultsPageProps> = ({ answers, onRetake }) => {
       >
         <div className="rounded-[2rem] border border-black/5 bg-white p-6 shadow-[0_20px_60px_rgba(16,53,61,0.08)] md:p-8">
           <ResultsDisplay result={selectedResult} />
+
+          <ResultPathways result={selectedResult} />
 
           {/* Share Section */}
           <motion.div

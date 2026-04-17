@@ -13,6 +13,7 @@ interface UseQuizReturn {
   loadQuiz: (quizId: string) => Promise<void>;
   moveToQuestion: (questionIndex: number) => void;
   answerQuestion: (answer: Answer) => void;
+  hydrateProgress: (answers: Answer[], questionIndex: number) => void;
   resetQuiz: () => void;
 }
 
@@ -53,6 +54,19 @@ export const useQuiz = (): UseQuizReturn => {
     [dispatch]
   );
 
+  const hydrateProgress = useCallback(
+    (answers: Answer[], questionIndex: number) => {
+      dispatch({
+        type: 'HYDRATE_PROGRESS',
+        payload: {
+          answers,
+          currentQuestionIndex: questionIndex,
+        },
+      });
+    },
+    [dispatch]
+  );
+
   const resetQuiz = useCallback(() => {
     dispatch({ type: 'RESET_QUIZ' });
   }, [dispatch]);
@@ -62,6 +76,7 @@ export const useQuiz = (): UseQuizReturn => {
     loadQuiz,
     moveToQuestion,
     answerQuestion,
+    hydrateProgress,
     resetQuiz,
   };
 };

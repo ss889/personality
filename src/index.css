@@ -14,15 +14,109 @@ html {
   font-family: 'Sora', 'Segoe UI', sans-serif;
   scroll-behavior: smooth;
   scroll-padding-top: 96px;
+  color-scheme: light;
+}
+
+:root {
+  --app-bg: #fffbf7;
+  --app-bg-accent: #f8fbff;
+  --app-surface: rgba(255, 255, 255, 0.9);
+  --app-surface-strong: #ffffff;
+  --app-text: #102330;
+  --app-muted: #5f6b75;
+  --app-border: rgba(16, 35, 48, 0.08);
+  --app-accent: #f4a328;
+  --app-accent-strong: #123e47;
+  --app-control: #f6eee2;
+  --app-control-text: #14343a;
+  --app-shadow: rgba(16, 53, 61, 0.08);
+}
+
+:root[data-theme='bauhaus'] {
+  --app-bg: #f5f2ea;
+  --app-bg-accent: #fffaf2;
+  --app-surface: rgba(255, 255, 255, 0.96);
+  --app-surface-strong: #ffffff;
+  --app-text: #121212;
+  --app-muted: #444444;
+  --app-border: rgba(18, 18, 18, 0.18);
+  --app-accent: #e53935;
+  --app-accent-strong: #0057b8;
+  --app-control: #f4cc3a;
+  --app-control-text: #111111;
+  --app-shadow: rgba(18, 18, 18, 0.12);
+  color-scheme: light;
+}
+
+:root[data-theme='midnight'] {
+  --app-bg: #091520;
+  --app-bg-accent: #102539;
+  --app-surface: rgba(13, 27, 39, 0.9);
+  --app-surface-strong: #122131;
+  --app-text: #eef5ff;
+  --app-muted: #a7b8ca;
+  --app-border: rgba(174, 197, 224, 0.16);
+  --app-accent: #8eb6ff;
+  --app-accent-strong: #eaf1ff;
+  --app-control: #16293d;
+  --app-control-text: #eef5ff;
+  --app-shadow: rgba(0, 0, 0, 0.28);
+  color-scheme: dark;
+}
+
+:root[data-theme='ocean'] {
+  --app-bg: #eef8fb;
+  --app-bg-accent: #dff1f7;
+  --app-surface: rgba(255, 255, 255, 0.94);
+  --app-surface-strong: #ffffff;
+  --app-text: #123240;
+  --app-muted: #5b7280;
+  --app-border: rgba(18, 50, 64, 0.1);
+  --app-accent: #2f8fff;
+  --app-accent-strong: #0f3655;
+  --app-control: #dff2ff;
+  --app-control-text: #123240;
+  --app-shadow: rgba(18, 50, 64, 0.08);
+  color-scheme: light;
+}
+
+:root[data-theme='monochrome'] {
+  --app-bg: #f2f2f2;
+  --app-bg-accent: #e9e9e9;
+  --app-surface: rgba(255, 255, 255, 0.94);
+  --app-surface-strong: #ffffff;
+  --app-text: #171717;
+  --app-muted: #4f4f4f;
+  --app-border: rgba(23, 23, 23, 0.18);
+  --app-accent: #3b3b3b;
+  --app-accent-strong: #0f0f0f;
+  --app-control: #dbdbdb;
+  --app-control-text: #171717;
+  --app-shadow: rgba(23, 23, 23, 0.12);
+  color-scheme: light;
 }
 
 body {
   background:
-    radial-gradient(circle at 10% 0%, rgba(249, 115, 22, 0.18) 0%, rgba(249, 115, 22, 0) 40%),
-    radial-gradient(circle at 90% 20%, rgba(139, 92, 246, 0.16) 0%, rgba(139, 92, 246, 0) 35%),
-    linear-gradient(180deg, #fffbf7 0%, #f8fbff 100%);
+    radial-gradient(circle at 10% 0%, color-mix(in srgb, var(--app-accent) 18%, transparent) 0%, transparent 40%),
+    radial-gradient(circle at 90% 20%, color-mix(in srgb, var(--app-accent-strong) 14%, transparent) 0%, transparent 35%),
+    linear-gradient(180deg, var(--app-bg) 0%, var(--app-bg-accent) 100%);
   min-height: 100vh;
-  color: #102330;
+  color: var(--app-text);
+}
+
+:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--app-accent) 78%, white 22%);
+  outline-offset: 2px;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--app-surface-strong) 55%, transparent),
+    0 0 0 5px color-mix(in srgb, var(--app-accent) 72%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {
